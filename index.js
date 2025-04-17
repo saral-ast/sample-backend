@@ -1,26 +1,33 @@
-require("dotenv").config();
+// api/index.js
 const express = require("express");
 const cors = require("cors");
 
 const app = express();
 
-// Enable CORS for all origins
-app.use(cors());
+// CORS configuration with specific origin allowed
+app.use(
+  cors({
+    origin: "*", // In production, replace with your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
+// Sample data
 const data = {
   name: "Arsenal",
   address: "123 Main St",
   city: "New York",
 };
 
-app.get("/api", (req, res) => {
+// Define routes - note we're not using '/api' prefix here
+app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/api/data", (req, res) => {
+app.get("/data", (req, res) => {
   res.json(data);
 });
 
-// IMPORTANT: Remove the app.listen part for Vercel
-// Instead, export the Express app
+// Export as a module for Vercel serverless
 module.exports = app;
