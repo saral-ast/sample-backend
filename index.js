@@ -4,10 +4,8 @@ const cors = require("cors");
 
 const app = express();
 
-// ✅ Enable CORS for all origins (or specify your frontend URL)
+// Enable CORS for all origins
 app.use(cors());
-
-const port = process.env.PORT || 3000;
 
 const data = {
   name: "Arsenal",
@@ -15,14 +13,14 @@ const data = {
   city: "New York",
 };
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/data", (req, res) => {
+app.get("/api/data", (req, res) => {
   res.json(data);
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+// IMPORTANT: Remove the app.listen part for Vercel
+// Instead, export the Express app
+module.exports = app;
